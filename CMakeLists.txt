@@ -33,5 +33,5 @@ endif()
 project(BaseTool)
 
 # ShareLib's path
-set(ShareLibPath ${CMAKE_CURRENT_SOURCE_DIR}/../ShareLib)
+set(ShareLibPath ${CMAKE_CURRENT_SOURCE_DIR}/ShareLib)
 
