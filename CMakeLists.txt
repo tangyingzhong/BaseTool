@@ -168,8 +168,7 @@ link_libraries(${PocoLibs})
 # Source group 
 set(AudioPlayerSrc Tool/AudioPlayer/AudioPlayer.h
     Tool/AudioPlayer/AudioPlayer.cpp)
-set(BufferSrc Tool/Buffer/Buffer.h
-    Tool/Buffer/Buffer.cpp)
+set(BufferSrc Tool/Buffer/Buffer.h)
 set(CommonSrc Tool/Common/Common.h
     Tool/Common/Common.cpp)
 set(ConfigSrc Tool/Config/BTConfig.h)

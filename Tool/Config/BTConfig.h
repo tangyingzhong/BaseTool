@@ -19,7 +19,7 @@
     #endif
 #endif
 
-#ifdef __APPLE__
+#ifdef defined(__APPLE__) || defined(__TOS_MACOS__)
     #if EXPORT_CLASS
        #define BT_API __attribute__ ((visibility ("default")))
     #else
