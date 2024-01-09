@@ -46,7 +46,8 @@ endif()
 message(STATUS "ShareLib=" ${ShareLibPath})
 
 # Include the head files
-include(${PROJECT_SOURCE_DIR})
+include(${PROJECT_SOURCE_DIR}
+    ${PROJECT_SOURCE_DIR}/Tool)
 
 # Link poco library
 if(WINDOWS)
