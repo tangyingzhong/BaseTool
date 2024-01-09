@@ -22,6 +22,7 @@ endif()
 if(WINDOWS)
     add_definitions("-DUNICODE" "-D_UNICODE")
 endif()
+add_definitions(-DEXPORT_CLASS)
 
 # 设置不同编译方式下的优化方式
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")

@@ -15,15 +15,15 @@
 #include <string.h>
 #include "Config/BTConfig.h"
 
-template<class T>
+template <class T>
 class BT_API Buffer
 {
 public:
     // Construct a buffer with fixed count of elem
     Buffer(std::size_t iLength) : m_iCapacity(iLength),
-                            m_iUsedLen(iLength),
-                            m_pData(nullptr),
-                            m_bIsOnwer(true)
+                                  m_iUsedLen(iLength),
+                                  m_pData(nullptr),
+                                  m_bIsOnwer(true)
     {
         if (iLength > 0)
         {
@@ -34,19 +34,19 @@ public:
     // Constrcut a buffer allocated by others
     // Consider pMem maybe nullptr,so we do not give it owner
     Buffer(T *pMem, std::size_t iLength) : m_iCapacity(iLength),
-                                     m_iUsedLen(iLength),
-                                     m_pData(pMem),
-                                     m_bIsOnwer(false)
+                                           m_iUsedLen(iLength),
+                                           m_pData(pMem),
+                                           m_bIsOnwer(false)
     {
     }
 
     // Constrcut a buffer allocated by others,inner will copy it to new one
     Buffer(T *pMem, std::size_t iLength) : m_iCapacity(iLength),
-                                     m_iUsedLen(iLength),
-                                     m_pData(pMem),
-                                     m_bIsOnwer(true)
+                                           m_iUsedLen(iLength),
+                                           m_pData(pMem),
+                                           m_bIsOnwer(true)
     {
-        if(m_iCapacity > 0)
+        if (m_iCapacity > 0)
         {
             m_pData = new T[m_iCapacity];
             std::memcpy(m_pData, pMem, m_iUsedLen * sizeof(T));
@@ -59,19 +59,19 @@ public:
                                   m_pData(nullptr),
                                   m_bIsOnwer(true)
     {
-        if(m_iUsedLen)
+        if (m_iUsedLen)
         {
             m_pData = new T[m_iUsedLen];
             std::memcpy(m_pData, other.m_pData, m_iUsedLen * sizeof(T));
         }
     }
 
-    // Buffer Assigment, owner transfer to another one 
-    Buffer& operator=(const Buffer& other)
+    // Buffer Assigment, owner transfer to another one
+    Buffer &operator=(const Buffer &other)
     {
         if (this != &other)
         {
-            if(m_bIsOnwer)
+            if (m_bIsOnwer)
             {
                 delete[] m_pData;
             }
@@ -91,7 +91,7 @@ public:
     // Destruct the buffer
     ~Buffer()
     {
-        if(m_bIsOnwer)
+        if (m_bIsOnwer)
         {
             Destroy(m_pData);
         }
@@ -100,15 +100,15 @@ public:
     // Resize the buffer with a new size
     bool Resize(std::size_t iNewCapacity, bool bIsKeepOldData = true)
     {
-        if(!m_bIsOnwer)
+        if (!m_bIsOnwer)
         {
             return false;
         }
 
-        if(iNewCapacity != m_iCapacity)
+        if (iNewCapacity != m_iCapacity)
         {
-            T* pData = new T[iNewCapacity];
-            if(pData == nullptr)
+            T *pData = new T[iNewCapacity];
+            if (pData == nullptr)
             {
                 return false;
             }
@@ -133,40 +133,40 @@ public:
     // Assign an array
     void Assign(const T *pData, std::size_t iSize)
     {
-        if(iSize == 0)
+        if (iSize == 0)
         {
             return;
         }
 
-        if(m_iCapacity < iSize)
+        if (m_iCapacity < iSize)
         {
-            Resize(iSize,false);
+            Resize(iSize, false);
         }
 
         std::memcpy(m_pData, pData, iSize * sizeof(T));
         m_iUsedLen = iSize;
     }
-   
+
     // Begin of buffer
-    T* Begin()
+    T *Begin()
     {
         return m_pData;
     }
 
     // Begin of buffer
-    const T* Begin()
+    const T *Begin()
     {
         return m_pData;
     }
 
     // End of buffer
-    T* End()
+    T *End()
     {
         return m_pData + m_iUsedLen;
     }
 
     // End of buffer
-    const T* End()
+    const T *End()
     {
         return m_pData + m_iUsedLen;
     }
@@ -196,9 +196,9 @@ public:
     }
 
     // Get data
-    T& operator[](std::size_t iIndex)
+    T &operator[](std::size_t iIndex)
     {
-        if(iIndex < m_iUsedLen)
+        if (iIndex < m_iUsedLen)
         {
             return m_pData[iIndex];
         }
@@ -207,9 +207,9 @@ public:
     }
 
     // Get data
-    const T& operator[](std::size_t iIndex)
+    const T &operator[](std::size_t iIndex)
     {
-        if(iIndex < m_iUsedLen)
+        if (iIndex < m_iUsedLen)
         {
             return m_pData[iIndex];
         }
@@ -220,7 +220,7 @@ public:
     // Append data to the buffer
     void Append(const T *pData, std::size_t iSize)
     {
-        if(iSize == 0)
+        if (iSize == 0)
         {
             return;
         }
@@ -236,17 +236,17 @@ public:
     }
 
     // Append a buffer
-    void Append(const Buffer& other)
+    void Append(const Buffer &other)
     {
         Append(other.Begin(), other.GetSize());
     }
 
     // Is two buffer equaled
-    bool operator==(const Buffer& other) const
+    bool operator==(const Buffer &other) const
     {
-        if(this != &other)
+        if (this != &other)
         {
-            if(m_iUsedLen == other.m_iUsedLen)
+            if (m_iUsedLen == other.m_iUsedLen)
             {
                 if (m_pData && other.m_pData && std::memcmp(m_pData, other.m_pData, m_iUsedLen * sizeof(T)) == 0)
                 {
@@ -263,17 +263,17 @@ public:
     }
 
     // Is one != another
-    bool operator!=(const Buffer& other) const
+    bool operator!=(const Buffer &other) const
     {
         return !(*this == other);
     }
 
 private:
     // Construt empty buffer is not allowed
-    Buffer(){   }
+    Buffer() {}
 
     // Destroy the continous buffer
-    void Destroy(T* pData)
+    void Destroy(T *pData)
     {
         if (pData)
         {
@@ -289,7 +289,7 @@ private:
     std::size_t m_iUsedLen;
 
     // Data pointer
-    T* m_pData;
+    T *m_pData;
 
     // Data refer
     T m_ReferData;
