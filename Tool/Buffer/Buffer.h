@@ -40,8 +40,8 @@ public:
     {
     }
 
-    // Constrcut a buffer allocated by others,inner will copy it to new one
-    Buffer(T *pMem, std::size_t iLength) : m_iCapacity(iLength),
+    // Constrcut a buffer with constant string,inner will copy it to new one
+    Buffer(const T *pMem, std::size_t iLength) : m_iCapacity(iLength),
                                            m_iUsedLen(iLength),
                                            m_pData(pMem),
                                            m_bIsOnwer(true)
@@ -198,7 +198,7 @@ public:
     // Get data
     T &operator[](std::size_t iIndex)
     {
-        if (iIndex < m_iUsedLen)
+        if (iIndex > 0 && iIndex < m_iUsedLen)
         {
             return m_pData[iIndex];
         }
